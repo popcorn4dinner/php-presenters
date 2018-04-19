@@ -16,16 +16,18 @@ only expose only needed functions and therefore the smallest possible interface 
 #+BEGIN_SRC php
 class SimpleUser
 {
+    private $firstName = "Florian";
+    private $lastName = "Thylman";
     private $age = 13;
 
     public function getFirstName()
     {
-        return "Florian";
+        return $this->firstName;
     }
 
     public function getLastName()
     {
-        return "Tylman";
+        return $this->lastName;
     }
 
     public function getAge()

@@ -2,7 +2,7 @@
   "name": "popcorn4dinner/presenters",
   "description": "A non-opinionated implementation of the presenter pattern",
   "type": "library",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "config": {
     "preferred-install": "dist"

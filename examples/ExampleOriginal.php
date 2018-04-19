@@ -5,16 +5,18 @@ namespace Popcorn4dinner\Presenters\Examples;
 
 class ExampleOriginal
 {
+    private $firstName = "Florian";
+    private $lastName = "Thylman";
     private $age = 13;
 
     public function getFirstName()
     {
-        return "Florian";
+        return $this->firstName;
     }
 
     public function getLastName()
     {
-        return "Tylman";
+        return $this->lastName;
     }
 
     public function getAge()

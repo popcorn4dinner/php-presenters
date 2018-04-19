@@ -1,0 +1,90 @@
+
+* Presenters
+
+** Installation
+#+BEGIN_SRC sh
+composer require popcorn4dinner/presenters
+#+END_SRC
+
+** Usage
+The idea behind presenters is to separate the presentation logic from your domain models. As a side effect you also 
+only expose only needed functions and therefore the smallest possible interface to the render process.
+   
+*** Example
+
+**** Simple user and Presenter class
+#+BEGIN_SRC php
+class SimpleUser
+{
+    private $age = 13;
+
+    public function getFirstName()
+    {
+        return "Florian";
+    }
+
+    public function getLastName()
+    {
+        return "Tylman";
+    }
+
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    public function setAge($newAge)
+    {
+        $this->age = $newAge;
+    }
+}
+#+END_SRC
+
+#+BEGIN_SRC php
+class ExamplePresenter extends AbstractPresenter
+{
+
+    protected const DELEGATED_METHODS = ['getFirstName', 'getLastName'];
+
+
+    public function getFullName()
+    {
+        return $this->getFirstName() . ' ' . $this->getLastName();
+    }
+
+    public function getAge()
+    {
+        return $this->original->getAge() . ' years';
+    }
+}
+#+END_SRC
+
+**** Example usage
+Controller:
+#+BEGIN_SRC php
+class UserController {
+   public function view(Request $request, FindUserHandler $handler, \Twig_Environment $twig)
+   {
+      $command = $this->commandPopulator->populate(new FindUser(), $request);
+      $user = $handler->execute($command, $user);
+
+      $response =  new Response(
+      $twig->render(
+        'users/view.twig',
+        [
+          'user' => new UserPresenter($user)
+        ]
+      )
+      );
+      return $response;
+    }
+}
+#+END_SRC
+
+View:
+#+BEGIN_SRC twig
+<div>
+ Name: {% $user->getFullName() %} // Florian Tylman
+ Age: {% $user->getAge() %} // 13
+</div>
+#+END_SRC

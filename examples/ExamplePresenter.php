@@ -9,10 +9,6 @@ class ExamplePresenter extends AbstractPresenter
 
     protected const DELEGATED_METHODS = ['getFirstName', 'getLastName'];
 
-    public function __construct(ExampleOriginal $original)
-    {
-        parent::__construct($original);
-    }
 
     public function getFullName()
     {

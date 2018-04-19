@@ -15,12 +15,13 @@ class AbstractPresenter
 
     function __call($methodName, $arguments)
     {
-        if (!$this->isAllowedToBeDelegated($methodName)) {
-            throw new ForbiddenDelegationException($this, $this->original, $methodName);
-        }
 
         if (!$this->isSaveToDelegate($methodName)) {
             throw new DelegationException($this, $this->original, $methodName);
+        }
+
+        if (!$this->isAllowedToBeDelegated($methodName)) {
+            throw new ForbiddenDelegationException($this, $this->original, $methodName);
         }
 
         return call_user_func_array([$this->original, $methodName], $arguments);
@@ -28,11 +29,11 @@ class AbstractPresenter
 
     private function isSaveToDelegate($methodName): bool
     {
-        return in_array($methodName, static::DELEGATED_METHODS);
+        return method_exists($this->original, $methodName);
     }
 
     private function isAllowedToBeDelegated($methodName): bool
     {
-        return method_exists($this->original, $methodName);
+        return in_array($methodName, static::DELEGATED_METHODS);
     }
 }

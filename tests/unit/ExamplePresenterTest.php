@@ -21,17 +21,13 @@ class ExamplePresenterTest extends TestCase
         $this->presenter = new ExamplePresenter($this->original);
     }
 
-    function test_thatPresenterRespondsToAllMethodsOfJobOffer()
+    function test_thatPresenterRespondsToAllMethods()
     {
-        $methodNames = get_class_methods($this->original);
-        $notAllowedMethods = ['__construct'];
+        $allowedMethods = ['getFirstName', 'getLastName'];
 
-        foreach ($methodNames as $methodName){
-            if(!in_array($methodName, $notAllowedMethods)){
-                $this->assertTrue(is_callable([$this->presenter, $methodName]), "Method '{$methodName}' should be callable");
-            }
+        foreach ($allowedMethods as $methodName) {
+            $this->assertTrue(is_callable([$this->presenter, $methodName]), "Method '{$methodName}' should be callable");
         }
-
     }
 
     /**
@@ -47,10 +43,6 @@ class ExamplePresenterTest extends TestCase
      */
     function test_presenter_throwsDelegationException_whenMethodNotWhitelisted()
     {
-        $this->presenter->somethingForbidden();
+        $this->presenter->setAge(22);
     }
-
-
-
-
 }

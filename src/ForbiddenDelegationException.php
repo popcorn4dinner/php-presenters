@@ -1,7 +1,7 @@
 <?php
 namespace Popcorn4dinner\Presenters;
 
-class DelegationException extends AbstractDelegationException
+class ForbiddenDelegationException extends AbstractDelegationException
 {
     protected function composeMessage($from, $to, $methodName):string
     {

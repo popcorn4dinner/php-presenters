@@ -2,7 +2,7 @@
 
 namespace Popcorn4dinner\Presenters;
 
-abstract class DelegationException extends \RuntimeException
+abstract class AbstractDelegationException extends \RuntimeException
 {
 
 
@@ -16,7 +16,7 @@ abstract class DelegationException extends \RuntimeException
         $from = get_class($from);
         $to = get_class($to);
 
-        parent::__construct(composeMessage($from, $to, $methodName));
+        parent::__construct($this->composeMessage($from, $to, $methodName));
     }
 
     abstract protected function composeMessage($from, $to, $methodName): string;
